@@ -9,3 +9,7 @@ with `concurrency` equal to the amount of partitions
 6. `CarLocationConsumer.java` - has 2 methods one to consume all messages from topic `t_location` 
 and another method to consume messages only from group id `cg-filtered-location` 
 which is filtered by using `filteredLocationContainerFactory` container factory
+7. `FoodOrderConsumer.java` - consumes a message when it satisfies all the conditions, 
+if not conditions are met then an exception is thrown which is handled by `FoodOrderErrorHandler`.
+8. `SimpleNumberConsumer.java` - consumes a message if a number is not odd. If the number is odd then an exception is thrown
+which is handled by `GlobalErrorHandler`.

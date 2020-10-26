@@ -3,6 +3,7 @@ package com.learning.kafkaconsumer.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.learning.kafkaconsumer.entity.CarLocation;
+import com.learning.kafkaconsumer.error.handler.GlobalErrorHandler;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,18 @@ public class KafkaConfig {
         properties.put(ConsumerConfig.METADATA_MAX_AGE_CONFIG, "120000");
         return new DefaultKafkaConsumerFactory<>(properties);
     }
+
+    @Bean(name = "kafkaListenerContainerFactory")
+    public ConcurrentKafkaListenerContainerFactory<Object, Object> filteredListenerContainerFactory(
+            ConcurrentKafkaListenerContainerFactoryConfigurer configurer
+    ) {
+        var factory = new ConcurrentKafkaListenerContainerFactory<>();
+        configurer.configure(factory, consumerFactory());
+
+        factory.setErrorHandler(new GlobalErrorHandler());
+        return factory;
+    }
+
 
     @Bean(name = "filteredLocationContainerFactory")
     public ConcurrentKafkaListenerContainerFactory<Object, Object> filteredLocationContainerFactory(
