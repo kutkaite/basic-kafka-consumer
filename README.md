@@ -36,3 +36,5 @@ which is filtered by using `filteredLocationContainerFactory` container factory
 if not conditions are met then an exception is thrown which is handled by `FoodOrderErrorHandler`.
 9. `SimpleNumberConsumer.java` - consumes a message if a number is not odd. If the number is odd then an exception is thrown
 which is handled by `GlobalErrorHandler`.
+10. `ImageConsumer.java` - consumes a message and has a custom retry mechanism `imageRetryContainerFactory`
+11. `InvoiceConsumer.java` - consumes a message from `t_invoice` and writes to Dead Letter topic on failure `t_invoice_dlt`
